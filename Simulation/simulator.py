@@ -23,7 +23,7 @@ def histMean(a):
     dict = {}
     i = 1
     for nr in result:
-        dict[i] = round(nr)
+        dict[i] = format(nr, '.1f')
         i += 1
     return dict
 
@@ -66,7 +66,7 @@ def generator(noPeople, probability, noHotels, noDays):
     histogram = list(dict(collections.Counter(histList)).values())
     # print(suspectPairsDays)
     # print(suspectPairs)
-    print(histogram)
+    # print(histogram)
     # print(len(uniquePeople))
     return [suspectPairsDays, suspectPairs, histogram, len(uniquePeople)]
 
@@ -87,13 +87,13 @@ def makeStats(n, p, h, d, noIterations):
     print("[RESULTS] *************")
     print(np.mean(pairsDayPeople), "    pary osób i dni")
     print(np.mean(pairsPeople), "    pary osób")
-    print(histMean(histogram), "    histogram")
+    print(histMean(histogram))
     print(np.mean(people), "    osób")
 
 
 if __name__ == '__main__':
     n = 10000
-    p = 0.16
+    p = 0.1
     h = 100
     d = 100
     noIteration = 10
