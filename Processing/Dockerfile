@@ -13,6 +13,12 @@ RUN apt-get install -y python3-pip python3-dev \
 # Install your software
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install sqlite3
 
+# Set encoding to UTF-8
+ENV PYTHONIOENCODING=utf-8
+ENV LC_ALL=en_CA.UTF-8
+ENV LANG=en_CA.UTF-8
+ENV LANGUAGE=en_CA.UTF-8
+
 # Set working dir
 WORKDIR .
 

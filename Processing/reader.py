@@ -50,6 +50,7 @@ def prepareData(conn):
             insert_row(values, cursor)
     with open("unique_tracks.txt", 'r', encoding = "ISO-8859-1") as fp:
         for line in fp:
+            line = line
             values = line.strip().split('<SEP>')
             insert_row(values, cursor)
 
@@ -61,12 +62,16 @@ def close_connection(conn):
 
 ###############EXERCISES#################
 def zad1(cursor):
-    cursor.execute("""SELECT title, artist, coun from {
-                            SELECT song_id, count(song_id) as coun FROM sample GROUP BY song_id ORDER BY count(song_id) DESC LIMIT 10
-                        } JOIN tracks ON song_id""")
-    rows = cursor.fetchall()
-    for row in rows:
-        print(row)
+    try:
+        cursor.execute("""SELECT title, artist, coun from (
+                                SELECT song_id, count(song_id) as coun FROM sample GROUP BY song_id ORDER BY count(song_id) DESC LIMIT 10)
+                            JOIN tracks using(song_id) ORDER BY coun DESC""")
+        rows = cursor.fetchall()
+        for row in rows:
+            print("<{0}> <{1}> <{2}>".format(str(row[0]), str(row[1]), str(row[2])))
+    except Error as e:
+        print(e)
+    
 
 
 if __name__ == '__main__':
@@ -83,6 +88,7 @@ if __name__ == '__main__':
     prepareData(conn)
     print("[INFO] Values inserted")
 
+    #**********EXERCISES*************
     cursor = conn.cursor()
     print("[INFO] ZAD 1")
     zad1(cursor)
