@@ -1,28 +1,14 @@
-# Lab 3 Data processing in Databases
+# Lab 4 Data processing in Databases
 
-## Download Million Song Dataset
-```
-bash get_dataset.sh
-```
+## Opis wybranej technologii
+Do rozwiązania zadania użyłem python3 z jedną zewnętrzną biblioteką - time - do operacji na datach.
 
-## To build example SQLite Docker image:
-
-```
-docker build sqlite_example .
-```
-
-## To run example container:
-```
-docker run --name sqlite_example_container sqlite_example
-```
-
-## To stop and remove example container:
-```
-docker stop sqlite_example_container
-docker rm sqlite_example_container
-```
-
-## To run example container in an interactive mode:
-```
-docker run -i -t sqlite_example /bin/bash
-```
+W moim rozwiązaniu użyłem słowników jako bazy danych. Tak jak widać w kodzie wydzieliłem na samej górze słowniki użyte do implementacji bazy danych.
+1. Song table - indeks to songId a pola to:
+    * songIdTitle = {} - idSong: Title,
+    * songIdArtist = {} - songId: Artist,
+2. User table - indeks to userId a pola to:
+    * userSongId = {} - userId: songId's - wszystkie piosenki które odsłuchał dany user z ich licznością,
+3. Date table - przechowuję tylko miesiące dla szybkości rozwiązania:
+    * monthCount = {} - month: count
+4. Imitacja tabeli faktów Listen - Odsłuchnia, jako powiązania między pozostałymi tabelami zaimplementowanymi w funkcjach zad1 - zad5

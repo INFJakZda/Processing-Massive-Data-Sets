@@ -10,9 +10,6 @@ RUN apt-get install -y python3-pip python3-dev \
     && ln -s /usr/bin/python3 python \
     && pip3 install --upgrade pip
 
-# Install your software
-RUN DEBIAN_FRONTEND=noninteractive apt-get -y install sqlite3
-
 # Set encoding to UTF-8
 ENV PYTHONIOENCODING=utf-8
 ENV LC_ALL=en_CA.UTF-8
@@ -27,7 +24,7 @@ COPY unique_tracks.txt .
 COPY triplets_sample_20p.txt .
 
 # Copy your code
-COPY reader.py .
+COPY diction.py .
 
 # Set starting command (run your code)
-CMD python3 reader.py
+CMD python3 diction.py

@@ -50,7 +50,6 @@ def prepareData(conn):
             insert_row(values, cursor)
     with open("unique_tracks.txt", 'r', encoding = "ISO-8859-1") as fp:
         for line in fp:
-            line = line
             values = line.strip().split('<SEP>')
             insert_row(values, cursor)
 
