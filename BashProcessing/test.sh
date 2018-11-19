@@ -41,7 +41,7 @@ END {
 #*************************************************************************
 #EXERCISES:
 
-#ZAD 1
+# ZAD 1
 #sortowanie odsłuchań i sortowanie wyniku
 sort --numeric-sort -t $',' -k 2 -r ./out/exercise1.txt | head -n 10 | sort -t $',' -k 1 > exercise1_sort.txt
 #połączenie z tytułami i autorami
@@ -56,15 +56,45 @@ gawk -F $',' '{
 rm exercise1_sort.txt exercise1_join.txt exercise1_result.txt
 #------------------------------------------------------
 
-#ZAD 2
+# ZAD 2 + ZAD 3
 gawk -F '<SEP>' '{
-  usersongs[$1][$2] = 1
+  usersongs[$1][$2] = 1;
+  songs[$2]++;
 }
 END {
+  for (key in songs) {
+    print key "," songs[key] > "exercise3.txt"
+  }
   for (key in usersongs) {
     print key " " length(usersongs[key])
   }
 }' $triplets_sample | sort --numeric-sort -k2 -r | head -n 10
+#------------------------------------------------------
+
+# ZAD 3
+#sortowanie pisosenek
+sort -t $',' -k 1 exercise3.txt > exercise3_sort.txt
+rm exercise3.txt
+#połączenie z artystą
+join -1 1 -t $',' exercise3_sort.txt ./out/tracksFormatted.txt > exercise3_join.txt
+rm exercise3_sort.txt
+
+#redukcja odsłuchań pisenek do autora
+gawk -F $',' '{
+  listen[$3] += $2;
+}
+END {
+  for (key in listen) {
+    print key "," listen[key]
+  }
+}' exercise3_join.txt | sort --numeric-sort -t $',' -k 2 -r | head -n 1 > exercise3_artist_best.txt 
+rm exercise3_join.txt
+
+#wypisanie wyniku
+gawk -F $',' '{
+  print $1 " " $2
+}' exercise3_artist_best.txt 
+rm exercise3_artist_best.txt
 #------------------------------------------------------
 
 # ZAD 4
